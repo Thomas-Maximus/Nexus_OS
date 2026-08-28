@@ -12,21 +12,15 @@ void initrd_init(uint32_t location) {
 }
 
 uint8_t* initrd_get_file(const char* name, size_t* size) {
-    uint8_t* ptr = initrd_base + 4;
-    
-    for (uint32_t i = 0; i < n_files; i++) {
-        char* file_name = (char*)ptr;
-        uint32_t file_size = *(uint32_t*)(ptr + 32);
-        uint8_t* file_data = ptr + 32 + 4 + (n_files - i - 1) * (36); // This logic needs to be careful
-        
-        // Simpler logic: First all headers, then all data.
-        // Header is 36 bytes.
-        // Data start at base + 4 + n_files * 36
+    if (!initrd_base || n_files == 0 || !name) {
+        return NULL;
     }
-    
-    // Correct logic matching mkinitrd.py
+    // Layout (matches mkinitrd.py):
+    //   [4 bytes: n_files] [n_files * 36-byte headers] [file data...]
+    //   Each header: [32 bytes: name (null-padded)] [4 bytes: size]
     uint8_t* header_ptr = initrd_base + 4;
-    uint8_t* data_ptr = initrd_base + 4 + (n_files * 36);
+    uint8_t* data_ptr   = initrd_base + 4 + (n_files * 36);
+
     
     for (uint32_t i = 0; i < n_files; i++) {
         uint32_t fsize = *(uint32_t*)(header_ptr + 32);

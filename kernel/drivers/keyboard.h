@@ -1,7 +1,11 @@
 #ifndef KEYBOARD_H
 #define KEYBOARD_H
 
-void keyboard_install();
-unsigned char keyboard_getc();
+#include <stdint.h>
+
+void keyboard_install(void);
+int keyboard_has_data(void);
+unsigned char keyboard_getc(void);
 
 #endif
+

@@ -10,7 +10,8 @@ CFLAGS = -m32 -ffreestanding -O2 -Wall -Wextra -fno-stack-protector -fno-pic \
          -Ikernel -Ikernel/python -Ikernel/python/py -Ikernel/python/extmod \
          -Ikernel/python/shared/readline
 ASFLAGS = -f elf32
-LDFLAGS = -m elf_i386 -T kernel/linker.ld
+LDFLAGS = -m elf_i386 -T kernel/linker.ld -z noexecstack
+
 
 # Source Files
 SRCS_S = kernel/boot.s

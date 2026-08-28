@@ -18,8 +18,11 @@ def make_initrd(files, output_filename):
             name_padded = name_bytes + b'\x00' * (32 - len(name_bytes))
             
             with open(filepath, 'rb') as f_in:
-                data = f_in.read()
+                data = f_in.read().replace(b'\r\n', b'\n')
+                if not data.endswith(b'\n'):
+                    data += b'\n'
                 size = len(data)
+
                 
             headers.append(name_padded + struct.pack('<I', size))
             data_blobs.append(data)

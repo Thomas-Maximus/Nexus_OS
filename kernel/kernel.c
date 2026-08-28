@@ -100,6 +100,8 @@ void kernel_main(uint32_t magic, struct multiboot_info* mbi) {
 
     idt_install();
     write_serial_string("SERIAL: IDT Installed\n");
+    timer_install();
+    write_serial_string("SERIAL: Timer Installed\n");
     keyboard_install();
     write_serial_string("SERIAL: Keyboard Installed\n");
 
@@ -116,7 +118,7 @@ void kernel_main(uint32_t magic, struct multiboot_info* mbi) {
     terminal_writestring("\n Starting Nexus Project Layer...\n");
     terminal_writestring(" Initializing Python Environment...\n");
 
-    extern void start_nexus_python();
+    extern void start_nexus_python(void);
     start_nexus_python();
 
     write_serial_string("SERIAL: Core Initialized Successful\n");

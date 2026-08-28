@@ -893,3 +893,14 @@ Q(values)
 Q(zip)
 
 Q(zip)
+
+Q(input)
+
+Q(help)
+
+Q(line)
+
+Q(slice)
+
+
+
